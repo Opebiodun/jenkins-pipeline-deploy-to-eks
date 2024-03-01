@@ -1,8 +1,9 @@
 module "eks" {
     source  = "terraform-aws-modules/eks/aws"
-    version = "~> 19.0"
+    version = "~> 20.0"
+
     cluster_name = "myapp-eks-cluster"
-    cluster_version = "1.24"
+    cluster_version = "1.29"
 
     cluster_endpoint_public_access  = true
 
@@ -18,12 +19,18 @@ module "eks" {
 
     eks_managed_node_groups = {
         dev = {
-             desired_capacity = 2
-             max_capacity     = 3
-             min_capacity     = 1
+             min_size     = 1
+             max_size     = 3
+             desired_size = 2
             
             instance_types = ["t2.small"]
+            capacity_type  = "SPOT"
         }
     }
-}
+    
+tags = {
+    Environment = "dev"
+    Terraform   = "true"
+  }
 
+}
