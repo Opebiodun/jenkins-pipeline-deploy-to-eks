@@ -1,7 +1,7 @@
-#terraform {
-#  backend "s3" {
-#    bucket = "caps-app"
-#    region = "us-east-1"
-#    key = "eks/terraform.tfstate"
-#  }
-#}
+terraform {
+  backend "s3" {
+    bucket = "caps-app"
+   region = "us-east-1"
+   key = "eks/terraform.tfstate"
+  }
+}
