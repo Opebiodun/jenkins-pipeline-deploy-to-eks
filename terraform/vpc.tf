@@ -12,11 +12,6 @@ module "myapp-vpc" {
   single_nat_gateway   = true
   enable_dns_hostnames = true
 
-  resource "aws_eip" "nat" {
-   domain = "vpc"
-}
-
-
   tags = {
     "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
   }
@@ -30,4 +25,8 @@ module "myapp-vpc" {
     "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
     "kubernetes.io/role/internal-elb"         = 1
   }
+}
+
+resource "aws_eip" "nat" {
+   domain = "vpc"
 }
