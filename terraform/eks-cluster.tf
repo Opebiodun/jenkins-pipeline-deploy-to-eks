@@ -25,12 +25,6 @@ module "eks" {
             
             instance_types = ["t2.small"]
             capacity_type  = "SPOT"
+            }
         }
     }
-    
-tags = {
-    Environment = "dev"
-    Terraform   = "true"
-  }
-
-}
