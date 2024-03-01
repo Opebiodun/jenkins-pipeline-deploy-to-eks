@@ -11,12 +11,11 @@ module "myapp-vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
-  enable_vpn_gateway   = true
 
-  tags = {
-    Terraform = "true"
-    Environment = "development"
-  }
+  resource "aws_eip" "nat" {
+   domain = "vpc"
+}
+
 
   tags = {
     "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
@@ -32,4 +31,3 @@ module "myapp-vpc" {
     "kubernetes.io/role/internal-elb"         = 1
   }
 }
-
