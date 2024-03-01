@@ -8,12 +8,9 @@ module "myapp-vpc" {
   public_subnets  = var.public_subnet_cidr_blocks
   azs             = data.aws_availability_zones.azs.names
 
-  
+  enable_nat_gateway   = true
+  single_nat_gateway   = true
   enable_dns_hostnames = true
-  enable_nat_gateway  = true
-  single_nat_gateway  = false
-  reuse_nat_ips       = true                   
-  external_nat_ip_ids = "${aws_eip.nat.*.id}"   
 
   tags = {
     "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
@@ -30,6 +27,13 @@ module "myapp-vpc" {
   }
 }
 
-resource "aws_eip" "nat" {
-    domain = "vpc"
+terraform {
+  required_version = ">= 0.13.1"
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = ">= 3.73"
+    }
+  }
 }
