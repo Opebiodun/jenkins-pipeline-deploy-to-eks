@@ -7,11 +7,13 @@ module "myapp-vpc" {
   private_subnets = var.private_subnet_cidr_blocks
   public_subnets  = var.public_subnet_cidr_blocks
   azs             = data.aws_availability_zones.azs.names
-  enable_classiclink = null
 
-  enable_nat_gateway   = true
-  single_nat_gateway   = true
+  
   enable_dns_hostnames = true
+  enable_nat_gateway  = true
+  single_nat_gateway  = false
+  reuse_nat_ips       = true                   
+  external_nat_ip_ids = "${aws_eip.nat.*.id}"   
 
   tags = {
     "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
@@ -29,5 +31,7 @@ module "myapp-vpc" {
 }
 
 resource "aws_eip" "nat" {
-   domain = "vpc"
+  count = 3
+
+  vpc = true
 }
