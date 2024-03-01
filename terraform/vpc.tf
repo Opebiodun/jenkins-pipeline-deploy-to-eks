@@ -31,7 +31,5 @@ module "myapp-vpc" {
 }
 
 resource "aws_eip" "nat" {
-  count = 3
-
-  vpc = true
+    domain = "vpc"
 }
