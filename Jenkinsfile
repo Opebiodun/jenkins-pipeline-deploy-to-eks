@@ -11,8 +11,8 @@ pipeline {
             steps {
                 script {
                     dir('terraform') {
-                        input message: 'Initialize Terraform?', ok: 'Yes'
                         sh "terraform init"
+                        input message: "Are you sure to proceed?", ok: "Proceed"
                         sh "terraform apply -auto-approve"
                     }
                 }
