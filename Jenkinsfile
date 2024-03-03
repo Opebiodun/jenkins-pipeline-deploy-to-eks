@@ -5,13 +5,13 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION = "us-east-1"
+        TF_CLI_ARGS = '-input=false'
     }
     stages {
         stage("Create an EKS Cluster") {
             steps {
                 script {
                     dir('terraform') {
-                        input message: "Are you sure to proceed?", ok: "Proceed"
                         sh "terraform init"
                         sh "terraform apply -auto-approve"
                     }
